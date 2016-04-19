@@ -5,23 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
     <title>Mobiscroll</title>
-
+    <style type="text/css">
+        body,html{
+            font: 14px/200% Microsoft Yahei, SimSun, Arail;
+            padding: 0;
+            margin: 0;
+            outline: none!important;
+            moz-outline: none!important;
+        }
+        label,select,input{
+            display: inline-block;
+            font: inherit;
+            cursor: pointer;
+        }
+        .cityPickerBox{
+            margin: 20px;
+        }
+        .cityPickerInput{
+            width: 50%;
+            border: none;
+            background: none;
+            border-bottom: 1px solid #e5e5e5;
+            text-align: left;
+        }
+    </style>
+    
 </head>
 
 <body>
         <!-- Treelist demo markup -->
-        <div>
-            <label for="demo_treelist_dummy">省</label>
-            <input type="button" id="province" data-label="province" data-id="" class="input-cnt" readonly/ >
-            <label for="demo_treelist_dummy">市</label>
-            <input type="button" id="city" data-label="city" data-id="" class="input-cnt" readonly/>
-            <label for="demo_treelist_dummy">区</label>
-            <input type="text" id="district" data-label="district" data-id="" class="input-cnt" readonly/>
-            <button id="show"></button>
+        <div class="cityPickerBox">
+            <div>
+                <label for="demo_treelist_dummy">省</label>
+                <input type="button" id="province" data-label="province" data-id="" class="cityPickerInput" value="请选择省"/ >
+            </div>
+            <div>
+                <label for="demo_treelist_dummy">市</label>
+                <input type="button" id="city" data-label="city" data-id="" class="cityPickerInput" value="请选择市"/>
+            </div>
+            <div>
+                <label for="demo_treelist_dummy">区</label>
+                <input type="button" id="district" data-label="district" data-id="" class="cityPickerInput" value="请选择区"/>
+            </div>
             <ul id="demo_treelist"></ul>   
         </div>
-    </div>
-        <!-- jQuery Include -->
+    <!-- jQuery Include -->
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 
     <!-- Mobiscroll JS and CSS Includes -->
@@ -40,22 +68,23 @@
 
     <script src="js/i18n/mobiscroll.i18n.zh.js"></script>
 
+    <script src="js/city-picker.data.js"></script>
+    <script src="js/mobile-cityPicker.js"></script>
+
     <link href="css/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.icons.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.frame.android.css" rel="stylesheet" type="text/css" />
-    <link href="css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
-
+     <link href="css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.scroller.android.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
-
     <link href="css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
-
+    
     <style type="text/css">
         /* Demo Page styling, you can disregard this in your implementation */
         body { padding: 0; margin: 0; font-size: 16px; font-family: arial, verdana, sans-serif; }
-        .cityPickerInput{display: none}
+        .hidden{display: none}
         .mbsc-android-holo-light .dwwol {
             border-top: 1px solid #d9d9d9;
             border-bottom: 1px solid #d9d9d9;
@@ -67,15 +96,24 @@
         }
         .dwfl{flex:1;}
     </style>
-    <script src="js/city-picker.data.js"></script>
-    <script src="js/mobile-cityPicker.js"></script>
     <script type="text/javascript">
         $.mobileCityPicker({
-            'id': 'demo_treelist',//容器id
-            'defaultValue': [0,0,0],//默认选项
-            'label':['province', 'city', 'district'],//label与回填数据的input的data-label属性一一对应
-            'inputClass': 'input-cnt',//回填数据的input的class
-            'inputClick': true,//点击input也弹出城市选择
+            id: 'demo_treelist',//容器id
+            inputClass: 'cityPickerInput',//
+            inputClick: true,
+            option:{
+                defaultValue: [0,0,0],//默认选项
+                label:['province', 'city', 'district'],
+                theme: 'android-holo-light',
+                mode: 'mixed',
+                inputClass: 'hidden',
+                display: 'bottom', 
+                lang: 'zh',
+            },
+            callback: function(val,citys){
+                console.log(val);
+                console.log(citys);
+            }
         })
     </script>
 </body>

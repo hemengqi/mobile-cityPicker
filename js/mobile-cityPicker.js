@@ -2,7 +2,6 @@
 		var scroll = {
 			init: function(args){
 				$(function(){
-					if(!args.id){console.log('必须设置容器id');return;}
 					scroll.fillHtml(args);
 					scroll.bindEvent(args);
 				})
@@ -13,16 +12,17 @@
 			    }
 			    
 		    	var country = 86,
+		    		label = args.option.label,
 		    		liStr = '';
 		    	//console.log(ChineseDistricts[country]);
 		    	for(var province in ChineseDistricts[country]){
-		    		liStr += '<li><span class="'+args.label[0]+'">'+ChineseDistricts[country][province]+'</span>';
+		    		liStr += '<li><span class="'+label[0]+'">'+ChineseDistricts[country][province]+'</span>';
 		    			liStr += '<ul>';
 		    			for(var city in ChineseDistricts[province]){
-		    				liStr += '<li><span class="'+args.label[1]+'">'+ChineseDistricts[province][city]+'</span>';
+		    				liStr += '<li><span class="'+label[1]+'">'+ChineseDistricts[province][city]+'</span>';
 		    					liStr += '<ul>';
 		    					for(var district in ChineseDistricts[city]){
-		    						liStr += '<li><span class="'+args.label[2]+'">'+ChineseDistricts[city][district]+'</span></li>';
+		    						liStr += '<li><span class="'+label[2]+'">'+ChineseDistricts[city][district]+'</span></li>';
 		    					}
 		    					liStr += '</ul>';
 		    				liStr += '</li>';
@@ -34,40 +34,45 @@
 		    	
 			},
 			getText: function(args,val){
+	        	var citys = [];
 	        	val.split(' ').map(function(e,i){
-	        		var input = $('.'+args.inputClass).eq(i);
-	        		input.attr('data-id',e).val($('[data-val="'+e+'"]').find('.'+input.data('label')).html());
+	        		var input = $('.'+args.inputClass).eq(i),
+	        			txt = $('[data-val="'+e+'"]').find('.'+input.data('label')).html();
+	        		input.attr('data-id',e).val(txt);
+	        		citys.push(txt);
 	        	});
+	        	if(typeof(args.callback) == 'function'){
+	        		args.callback(val,citys);
+	        	}
 			},
 			bindEvent: function(args){
-				$('#'+args.id).mobiscroll().treelist({
-			        theme: 'android-holo-light',
-			        mode: 'mixed',
-			        inputClass: 'cityPickerInput',
-			        display: 'bottom', 
-			        lang: 'zh',
-			        defaultValue: args.defaultValue,
-			        labels: args.label,
+				$('#'+args.id).mobiscroll().treelist($.extend({
 			        onSelect: function (valueText, inst) {
 			        	scroll.getText(args,valueText);
     				},
-			    });
+			    },args.option));
 			    if(args.inputClick){
 			    	$('.'+args.inputClass).on('click',function(){
 			    		$('#'+args.id).mobiscroll('show');
 			    	})
 			    }
-			    
 			}
 		};
 	$.extend({
 		mobileCityPicker: function(option){
 			scroll.init($.extend({
-				'id': '',
-				'defaultValue':[0,0,0],
-				'label':['province', 'city', 'district'],
-            	'inputClass': 'input-cnt',
-            	'inputClick': false,
+				id: '',
+				inputClass:'cityPickerInput',
+				option:{
+					defaultValue:[0,0,0],
+					label:['province', 'city', 'district'],
+					theme: 'android-holo-light',
+			        mode: 'mixed',
+			        inputClass: 'hidden',
+			        display: 'bottom', 
+			        lang: 'zh',
+				},
+				callback:function(){},
 			},option));
 		}
 	})
