@@ -18,8 +18,17 @@
             font: inherit;
             cursor: pointer;
         }
-        .cityPickerBox{
+        .hidden{
+        	display: none;
+        }
+        .wrap{
             margin: 20px;
+        }
+        .wrap > div{
+        	margin-bottom: 10px
+        }
+        label{
+        	width:4em;
         }
         .cityPickerInput{
             width: 50%;
@@ -33,22 +42,64 @@
 </head>
 
 <body>
-        <!-- Treelist demo markup -->
-        <div class="cityPickerBox">
-            <div>
-                <label for="demo_treelist_dummy">省</label>
-                <input type="button" id="province" data-label="province" data-id="" class="cityPickerInput" value="请选择省"/ >
-            </div>
-            <div>
-                <label for="demo_treelist_dummy">市</label>
-                <input type="button" id="city" data-label="city" data-id="" class="cityPickerInput" value="请选择市"/>
-            </div>
-            <div>
-                <label for="demo_treelist_dummy">区</label>
-                <input type="button" id="district" data-label="district" data-id="" class="cityPickerInput" value="请选择区"/>
-            </div>
-            <ul id="demo_treelist"></ul>   
+	<div class="selectBox wrap">
+		<div>
+            <label for="theme">风格</label>
+            <select name="theme" id="theme" class="settings">
+                <option value="">Mobiscroll</option>
+                <option value="mobiscroll-dark">Mobiscroll Dark</option>
+                <option value="android">Android</option>
+                <option value="android-holo">Android Holo</option>
+                <option value="android-holo-light">Android Holo Light</option>
+                <option value="ios">iOS</option>
+                <option value="ios-classic">iOS Classic</option>
+                <option value="sense-ui">Sense UI</option>
+                <option value="wp">Windows Phone</option>
+                <option value="wp-light">Windows Phone Light</option>
+            </select>
         </div>
+        <div>
+            <label for="mode">滚动模式</label>
+            <select name="mode" id="mode" class="settings">
+                <option value="scroller">Scroller</option>
+                <option value="clickpick">Clickpick</option>
+                <option value="mixed">Mixed</option>
+            </select>
+        </div>
+        <div>
+            <label for="display">显示方式</label>
+            <select name="display" id="display" class="settings">
+                <!-- <option value="modal">Modal</option> -->
+                <option value="inline">Inline</option>
+                <!-- <option value="bubble">Bubble</option> -->
+                <option value="top">Top</option>
+                <option value="bottom">Bottom</option>
+            </select>
+        </div>
+        <div>
+            <label for="language">语言</label>
+            <select name="language" id="language" class="settings">
+                <option value="zh">Chinese</option>
+                <option value="en" selected>English</option>
+            </select>
+        </div>
+	</div>
+    <!-- Treelist demo markup -->
+    <div class="cityPickerBox wrap">
+        <div>
+            <label for="demo_treelist_dummy">省</label>
+            <input type="button" data-label="province" data-id="" class="cityPickerInput" value="请选择省"/ >
+        </div>
+        <div>
+            <label for="demo_treelist_dummy">市</label>
+            <input type="button" data-label="city" data-id="" class="cityPickerInput" value="请选择市"/>
+        </div>
+        <div>
+            <label for="demo_treelist_dummy">区</label>
+            <input type="button" data-label="district" data-id="" class="cityPickerInput" value="请选择区"/>
+        </div>
+        <ul id="demo_treelist"></ul>   
+    </div>
     <!-- jQuery Include -->
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 
@@ -75,46 +126,59 @@
     <link href="css/mobiscroll.icons.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.frame.android.css" rel="stylesheet" type="text/css" />
-     <link href="css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.frame.ios-classic.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.frame.ios.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.frame.jqm.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.frame.sense-ui.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.frame.wp.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.scroller.android.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.scroller.ios-classic.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.scroller.ios.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.scroller.jqm.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.scroller.sense-ui.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.scroller.wp.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.image.css" rel="stylesheet" type="text/css" />
+
     <link href="css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.wp-light.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.mobiscroll-dark.css" rel="stylesheet" type="text/css" />
     
     <style type="text/css">
-        /* Demo Page styling, you can disregard this in your implementation */
-        body { padding: 0; margin: 0; font-size: 16px; font-family: arial, verdana, sans-serif; }
-        .hidden{display: none}
-        .mbsc-android-holo-light .dwwol {
-            border-top: 1px solid #d9d9d9;
-            border-bottom: 1px solid #d9d9d9;
-        }
-        .mbsc-android-holo .dwwol {
-            display: block;
-            width: 100%;
-            left: 0;
-        }
         .dwfl{flex:1;}
     </style>
     <script type="text/javascript">
-        $.mobileCityPicker({
-            id: 'demo_treelist',//容器id
-            inputClass: 'cityPickerInput',//
-            inputClick: true,
-            option:{
-                defaultValue: [0,0,0],//默认选项
-                label:['province', 'city', 'district'],
-                theme: 'android-holo-light',
-                mode: 'mixed',
-                inputClass: 'hidden',
-                display: 'bottom', 
-                lang: 'zh',
-            },
-            callback: function(val,citys){
-                console.log(val);
-                console.log(citys);
-            }
-        })
+        var theme, mode, display, lang;
+        $('.settings').on('change',function(){
+        	theme = $('#theme').val();
+        	mode = $('#mode').val(),
+            display = $('#display').val(),
+            lang = $('#language').val();
+        	init();
+        });
+        function init(){
+        	$.mobileCityPicker({
+		        id: 'demo_treelist',//容器id
+		        inputClass: 'cityPickerInput',//
+		        inputClick: true,
+		        option:{
+		            defaultValue: [0,0,0],//默认选项
+		            label:['province', 'city', 'district'],
+		            theme: theme,
+		            mode: mode,
+		            inputClass: 'hidden',
+		            display: display, 
+		            lang: lang,
+		        },
+		        callback: function(val,citys){
+		            console.log(val);
+		            console.log(citys);
+		        }
+		    })
+        }
+        $('#theme').trigger('change');
     </script>
 </body>
 </html>

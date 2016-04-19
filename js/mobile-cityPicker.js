@@ -36,8 +36,9 @@
 			getText: function(args,val){
 	        	var citys = [];
 	        	val.split(' ').map(function(e,i){
+	        		console.log($('[aria-selected="true"]'));
 	        		var input = $('.'+args.inputClass).eq(i),
-	        			txt = $('[data-val="'+e+'"]').find('.'+input.data('label')).html();
+	        			txt = $('[aria-selected="true"]').find('.'+input.data('label')).html();
 	        		input.attr('data-id',e).val(txt);
 	        		citys.push(txt);
 	        	});
@@ -48,7 +49,11 @@
 			bindEvent: function(args){
 				$('#'+args.id).mobiscroll().treelist($.extend({
 			        onSelect: function (valueText, inst) {
+			        	console.log(valueText);
 			        	scroll.getText(args,valueText);
+    				},
+    				onValueTap: function (item, inst) {
+    					console.log(item);
     				},
 			    },args.option));
 			    if(args.inputClick){
