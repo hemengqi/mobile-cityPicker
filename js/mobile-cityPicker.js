@@ -2,6 +2,7 @@
 		var scroll = {
 			init: function(args){
 				$(function(){
+					if(!args.id){console.log('必须设置容器id');return;}
 					scroll.fillHtml(args);
 					scroll.bindEvent(args);
 				})
@@ -32,10 +33,10 @@
 		    	$('#'+args.id).html(liStr);
 		    	
 			},
-			getText: function(val){
+			getText: function(args,val){
 	        	val.split(' ').map(function(e,i){
-	        		var input = $('.input-cnt').eq(i);
-	        		input.data('id',e).val($('[data-val="'+e+'"]').find('.'+input.data('label')).html());
+	        		var input = $('.'+args.inputClass).eq(i);
+	        		input.attr('data-id',e).val($('[data-val="'+e+'"]').find('.'+input.data('label')).html());
 	        	});
 			},
 			bindEvent: function(args){
@@ -46,11 +47,17 @@
 			        display: 'bottom', 
 			        lang: 'zh',
 			        defaultValue: args.defaultValue,
-			        labels: ['province', 'city', 'district'],
+			        labels: args.label,
 			        onSelect: function (valueText, inst) {
-			        	scroll.getText(valueText);
+			        	scroll.getText(args,valueText);
     				},
 			    });
+			    if(args.inputClick){
+			    	$('.'+args.inputClass).on('click',function(){
+			    		$('#'+args.id).mobiscroll('show');
+			    	})
+			    }
+			    
 			}
 		};
 	$.extend({
@@ -58,6 +65,9 @@
 			scroll.init($.extend({
 				'id': '',
 				'defaultValue':[0,0,0],
+				'label':['province', 'city', 'district'],
+            	'inputClass': 'input-cnt',
+            	'inputClick': false,
 			},option));
 		}
 	})

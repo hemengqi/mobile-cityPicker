@@ -6,7 +6,22 @@
 
     <title>Mobiscroll</title>
 
-    <!-- jQuery Include -->
+</head>
+
+<body>
+        <!-- Treelist demo markup -->
+        <div>
+            <label for="demo_treelist_dummy">省</label>
+            <input type="button" id="province" data-label="province" data-id="" class="input-cnt" readonly/ >
+            <label for="demo_treelist_dummy">市</label>
+            <input type="button" id="city" data-label="city" data-id="" class="input-cnt" readonly/>
+            <label for="demo_treelist_dummy">区</label>
+            <input type="text" id="district" data-label="district" data-id="" class="input-cnt" readonly/>
+            <button id="show"></button>
+            <ul id="demo_treelist"></ul>   
+        </div>
+    </div>
+        <!-- jQuery Include -->
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 
     <!-- Mobiscroll JS and CSS Includes -->
@@ -25,19 +40,18 @@
 
     <script src="js/i18n/mobiscroll.i18n.zh.js"></script>
 
-    <script src="js/city-picker.data.js"></script>
-    <script src="js/mobile-cityPicker.js"></script>
-
     <link href="css/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.icons.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.frame.android.css" rel="stylesheet" type="text/css" />
-     <link href="css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+
     <link href="css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.scroller.android.css" rel="stylesheet" type="text/css" />
     <link href="css/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+
     <link href="css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
-    
+
     <style type="text/css">
         /* Demo Page styling, you can disregard this in your implementation */
         body { padding: 0; margin: 0; font-size: 16px; font-family: arial, verdana, sans-serif; }
@@ -53,26 +67,16 @@
         }
         .dwfl{flex:1;}
     </style>
+    <script src="js/city-picker.data.js"></script>
+    <script src="js/mobile-cityPicker.js"></script>
     <script type="text/javascript">
         $.mobileCityPicker({
             'id': 'demo_treelist',//容器id
             'defaultValue': [0,0,0],//默认选项
-            'label':['province', 'city', 'district']
+            'label':['province', 'city', 'district'],//label与回填数据的input的data-label属性一一对应
+            'inputClass': 'input-cnt',//回填数据的input的class
+            'inputClick': true,//点击input也弹出城市选择
         })
     </script>
-</head>
-
-<body>
-        <!-- Treelist demo markup -->
-        <div>
-            <label for="demo_treelist_dummy">省</label>
-            <input id="province" data-label="province" data-id="" class="input-cnt" / >
-            <label for="demo_treelist_dummy">市</label>
-            <input id="city" data-label="city" data-id="" class="input-cnt"/>
-            <label for="demo_treelist_dummy">区</label>
-            <input id="district" data-label="district" data-id="" class="input-cnt" />
-            <ul id="demo_treelist"></ul>   
-        </div>
-    </div>
 </body>
 </html>
